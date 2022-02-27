@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class OrderDao implements ReadOnlyDao<String, Order> {
 
+
     private OrderManipulationAuthorityClient omaClient;
 
     /**

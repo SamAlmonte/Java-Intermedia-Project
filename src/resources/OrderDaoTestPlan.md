@@ -39,3 +39,29 @@ Happy case, verifying that the OrderDao can return an order.
 
 ### Then
 * The result is not null
+
+### OrderDao_forKnownClient_returns_omaClient
+Happy case, verifying OrderDao constructor works 
+
+###Given 
+* A non-null OrderManipulationAuthorityClient
+
+### When
+* We call `OrderDao` constructor with a valid omaClient 
+
+### Then
+* The result is an instantiated OrderDAO object with a valid OrderManipulationAuthorityClient set as an instance variable.  
+
+
+### get_forUnknownOrderId_null
+*Alternate use case identifying what happens when orderId is null
+* OR orderID does not correlate to any IDs in the database
+
+#### Given
+* An order ID that does not exist or is null
+
+#### When
+1. We call `get()` with that order ID
+
+### Then
+* The function returns a null value 

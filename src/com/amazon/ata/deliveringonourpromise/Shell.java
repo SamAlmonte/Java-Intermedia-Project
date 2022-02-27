@@ -59,7 +59,8 @@ public class Shell {
     public static void main(String[] args)
     {
         Shell shell = new Shell(App.getPromiseHistoryClient(), new ATAUserHandler());
-        shell.processCommandLineArgs(args);
+        String[] args1 = {"--show-fixtures"};
+        shell.processCommandLineArgs(args1);
 
         try
         {
