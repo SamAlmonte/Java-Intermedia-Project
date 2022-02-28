@@ -5,8 +5,7 @@ import com.amazon.ata.deliveringonourpromise.data.OrderDatastore;
 import com.amazon.ata.deliveringonourpromise.data.OrderItemData;
 import com.amazon.ata.deliveringonourpromise.data.OrderShipmentData;
 import com.amazon.ata.deliverypromiseservice.service.DeliveryPromise;
-import com.amazon.ata.deliverypromiseservice.service.DeliveryPromiseService;
-
+import com.amazon.ata.deliverypromiseservice.service.DeliveryPromiseService;;
 import java.time.ZonedDateTime;
 
 /**
