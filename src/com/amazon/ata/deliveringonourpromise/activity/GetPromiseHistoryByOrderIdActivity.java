@@ -1,11 +1,16 @@
 package com.amazon.ata.deliveringonourpromise.activity;
 
+//import com.amazon.ata.deliveringonourpromise.comparators.PromiseAsinComparator;
+import com.amazon.ata.deliveringonourpromise.comparators.PromiseAsinComparator;
 import com.amazon.ata.deliveringonourpromise.dao.ReadOnlyDao;
 import com.amazon.ata.deliveringonourpromise.types.Order;
 import com.amazon.ata.deliveringonourpromise.types.OrderItem;
 import com.amazon.ata.deliveringonourpromise.types.Promise;
 import com.amazon.ata.deliveringonourpromise.types.PromiseHistory;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -43,20 +48,36 @@ public class GetPromiseHistoryByOrderIdActivity {
         if(order == null)
             return new PromiseHistory(null); //return a promise history with null value
         List<OrderItem> customerOrderItems = order.getCustomerOrderItemList();
-        OrderItem customerOrderItem = null;
+        //OrderItem customerOrderItem = null;
         if (customerOrderItems != null && !customerOrderItems.isEmpty()) {
-            customerOrderItem = customerOrderItems.get(0);
+            //customerOrderItem = customerOrderItems.get(0);
         }
+        else
+            return null;
+        //loop through all orderItems
+        //get all the promises
+        //all promises to promise history, return promise history
 
         PromiseHistory history = new PromiseHistory(order);
-        if (customerOrderItem != null) {
-            List<Promise> promises = promiseDao.get(customerOrderItem.getCustomerOrderItemId());
+        List<Promise> promises = promiseDao.get(customerOrderItems.get(0).getCustomerOrderItemId());
+        List<Promise> sortedList = new ArrayList<>();
+        for(int i = 0; i < customerOrderItems.size(); i++){
+            promises = promiseDao.get(customerOrderItems.get(i).getCustomerOrderItemId());
             for (Promise promise : promises) {
-                promise.setConfidence(customerOrderItem.isConfidenceTracked(), customerOrderItem.getConfidence());
-                history.addPromise(promise);
+                promise.setConfidence(customerOrderItems.get(i).isConfidenceTracked(), customerOrderItems.get(i).getConfidence());
+                //history.addPromise(promise);
+                sortedList.add(promise);
             }
         }
-
+        sortedList.sort(new PromiseAsinComparator());
+        for (Promise promise : sortedList) {
+            history.addPromise(promise);
+        }
+        //Comparator<Promise> promiseAsinComparator = new PromiseAsinComparator();
+        //List<Promise> sortPromises = history.getPromises();
+        //
+        // sortedList.sort(new PromiseAsinComparator());
+        //
         return history;
     }
 }

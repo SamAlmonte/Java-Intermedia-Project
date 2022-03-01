@@ -1,5 +1,4 @@
 package com.amazon.ata.deliveringonourpromise.dao;
-
 import com.amazon.ata.deliveringonourpromise.Client.Client;
 import com.amazon.ata.deliveringonourpromise.deliverypromiseservice.DeliveryPromiseServiceClient;
 import com.amazon.ata.deliveringonourpromise.ordermanipulationauthority.OrderManipulationAuthorityClient;
@@ -66,19 +65,18 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
             return promises;
         }
 
-        Promise ofsPromise = ofsClient.getDeliveryPromiseByOrderItemId(customerOrderItemId);
-        if(ofsPromise != null){
-            ofsPromise.setDeliveryDate(itemDeliveryDate);
-            promises.add(ofsPromise);
-        }
-
-
         Promise dpsPromise = dpsClient.getDeliveryPromiseByOrderItemId(customerOrderItemId);
         if (dpsPromise != null) {
             dpsPromise.setDeliveryDate(itemDeliveryDate);
             promises.add(dpsPromise);
         }
-
+        if(ofsClient == null)
+            return promises;
+        Promise ofsPromise = ofsClient.getDeliveryPromiseByOrderItemId(customerOrderItemId);
+        if(ofsPromise == null) //just incase the Order Is invalid?
+            return promises;
+        ofsPromise.setDeliveryDate(itemDeliveryDate);
+        promises.add(ofsPromise);
         return promises;
     }
 

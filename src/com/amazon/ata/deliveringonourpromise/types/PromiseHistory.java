@@ -49,4 +49,8 @@ public class PromiseHistory {
     public List<Promise> getPromises() {
         return new ArrayList<>(promises);
     }
+
+    public void setPromises(List<Promise> aList){
+        aList = new ArrayList<>(aList);
+    }
 }

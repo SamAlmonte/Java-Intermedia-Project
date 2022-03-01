@@ -1,6 +1,8 @@
 package com.amazon.ata.deliveringonourpromise.types;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
+//import com.amazon.ata.deliveringonourpromise.comparators.PromiseAsinComparator;
 
 /**
  * Represents a customer promise, regardless of which service/stage of the order process
@@ -85,6 +87,9 @@ public class Promise {
     public int getConfidence() {
         return confidence;
     }
+
+
+
 
     /**
      * Sets the confidence value associated with the item ID this promise corresponds to. Allow setting
